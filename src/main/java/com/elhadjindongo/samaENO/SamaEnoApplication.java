@@ -25,6 +25,8 @@ public class SamaEnoApplication implements CommandLineRunner {
     private AnnonceRepository annonceRepository;
     @Autowired
     private BenoClubRepository benoClubRepository;
+    @Autowired
+    private ElectionRepository electionRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(SamaEnoApplication.class, args);
@@ -97,7 +99,7 @@ public class SamaEnoApplication implements CommandLineRunner {
 
         System.out.println("********************BenoClub******************************");
 
-        BenoClub club1 = new BenoClub(null,"BENO","Bureau des Etudiants de l'ENO","slogan1","description1", null);
+        BenoClub club1 = new BenoClub(null, "BENO", "Bureau des Etudiants de l'ENO", "slogan1", "description1", null);
         List<PersonnelBENO> membreClub = new ArrayList<PersonnelBENO>();
         membreClub.add(membreBENO1);
         club1.setMembres(membreClub);
@@ -109,5 +111,11 @@ public class SamaEnoApplication implements CommandLineRunner {
                 System.out.println(m.getNom());
             }
         }
+
+        System.out.println("********************Election******************************");
+
+        Election election = new Election(null, "Presidence BENO", new Date(), new Date(), null);
+        electionRepository.save(election);
+        System.out.println("election : " + electionRepository.findAll().get(0));
     }
 }
