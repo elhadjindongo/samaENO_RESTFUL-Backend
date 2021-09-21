@@ -10,10 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
 
 
 @Data
@@ -24,7 +22,7 @@ import javax.persistence.Table;
 @Table(name = "personnel_beno")
 @PrimaryKeyJoinColumn(name = "id_utilisateur")
 public class PersonnelBENO extends Personnel {
-   @Column(name = "nom_club")
-   private String intituleClub;
+   @ManyToMany(mappedBy = "membres", fetch = FetchType.EAGER)
+   private Collection<BenoClub> clubs;
 
 }

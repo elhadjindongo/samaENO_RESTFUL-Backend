@@ -1,17 +1,15 @@
 package com.elhadjindongo.samaENO;
 
-import com.elhadjindongo.samaENO.entities.Etudiant;
-import com.elhadjindongo.samaENO.entities.PersonnelAdministratif;
-import com.elhadjindongo.samaENO.entities.PersonnelBENO;
+import com.elhadjindongo.samaENO.entities.*;
 import com.elhadjindongo.samaENO.models.UserRole;
-import com.elhadjindongo.samaENO.repository.EtudiantRepository;
-import com.elhadjindongo.samaENO.repository.PersonnelAdministratifRepository;
-import com.elhadjindongo.samaENO.repository.PersonnelBENORepository;
+import com.elhadjindongo.samaENO.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -23,6 +21,10 @@ public class SamaEnoApplication implements CommandLineRunner {
     private PersonnelAdministratifRepository personnelAdministratifRepository;
     @Autowired
     private PersonnelBENORepository personnelBENORepository;
+    @Autowired
+    private AnnonceRepository annonceRepository;
+    @Autowired
+    private BenoClubRepository benoClubRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(SamaEnoApplication.class, args);
@@ -40,9 +42,7 @@ public class SamaEnoApplication implements CommandLineRunner {
         etudiant1.setMotsDePasse("mots de passe");
         etudiant1.setTelephone("221775194594");
         etudiant1.setRole(UserRole.ETUDIANT);
-
         etudiantRepository.save(etudiant1);
-
         List<Etudiant> etudiantList = etudiantRepository.findAll();
         for (Etudiant e : etudiantList) {
             System.out.println(e);
@@ -65,10 +65,9 @@ public class SamaEnoApplication implements CommandLineRunner {
             System.out.println(p.getPrenom());
             System.out.println(p.getPosteOccuppe());
         }
-        System.out.println("********************Personnel BENO");
+        System.out.println("********************Personnel BENO******************************");
         PersonnelBENO membreBENO1 = new PersonnelBENO();
         membreBENO1.setPosteOccuppe("Presidente BENO Thies");
-        membreBENO1.setIntituleClub("Bureau des Etudiant");
         membreBENO1.setNom("Ndiaye");
         membreBENO1.setPrenom("Fatou");
         membreBENO1.setEmailInstitutionnelle("fatou.ndiaye@uvs.edu.sn");
@@ -77,14 +76,38 @@ public class SamaEnoApplication implements CommandLineRunner {
         membreBENO1.setTelephone("221779876");
         membreBENO1.setRole(UserRole.PERSONNEL_BENO);
         personnelBENORepository.save(membreBENO1);
-
         List<PersonnelBENO> personelBENO = personnelBENORepository.findAll();
         for (PersonnelBENO pB : personelBENO) {
             System.out.println(pB.getNom());
             System.out.println(pB.getPrenom());
             System.out.println(pB.getPosteOccuppe());
-            System.out.println(pB.getIntituleClub());
             System.out.println(pB.getRole());
+        }
+        System.out.println("********************Annonce******************************");
+        Annonce annonce1 = new Annonce(
+                null, "Retrait des Cartes Etudiant pour la P8", new String[]{"link1", "link2"}, "Lorem ipsum", new Date(), "cheminPhot", membre1
+        );
+        annonceRepository.save(annonce1);
+        List<Annonce> annonces = annonceRepository.findAll();
+        for (Annonce a : annonces) {
+            System.out.println(a.getTitre());
+            System.out.println(a.getAuteur().getPrenom());
+            System.out.println(a.getAuteur().getNom());
+        }
+
+        System.out.println("********************BenoClub******************************");
+
+        BenoClub club1 = new BenoClub(null,"BENO","Bureau des Etudiants de l'ENO","slogan1","description1", null);
+        List<PersonnelBENO> membreClub = new ArrayList<PersonnelBENO>();
+        membreClub.add(membreBENO1);
+        club1.setMembres(membreClub);
+        benoClubRepository.save(club1);
+        List<BenoClub> clubs = benoClubRepository.findAll();
+        for (BenoClub c : clubs) {
+            System.out.println(c.getDescription());
+            for (PersonnelBENO m : c.getMembres()) {
+                System.out.println(m.getNom());
+            }
         }
     }
 }
