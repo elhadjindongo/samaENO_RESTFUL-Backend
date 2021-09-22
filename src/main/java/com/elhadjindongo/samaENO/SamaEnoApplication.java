@@ -1,6 +1,7 @@
 package com.elhadjindongo.samaENO;
 
 import com.elhadjindongo.samaENO.entities.*;
+import com.elhadjindongo.samaENO.models.RessourceType;
 import com.elhadjindongo.samaENO.models.UserRole;
 import com.elhadjindongo.samaENO.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,12 @@ public class SamaEnoApplication implements CommandLineRunner {
     private BenoClubRepository benoClubRepository;
     @Autowired
     private ElectionRepository electionRepository;
+    @Autowired
+    private SalleDeCoursRepository salleDeCoursRepository;
+    @Autowired
+    private PosteInformatiqueRepository posteInformatiqueRepository;
+    @Autowired
+    private RessourceBureautiqueRepository ressourceBureautiqueRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(SamaEnoApplication.class, args);
@@ -117,5 +124,22 @@ public class SamaEnoApplication implements CommandLineRunner {
         Election election = new Election(null, "Presidence BENO", new Date(), new Date(), null);
         electionRepository.save(election);
         System.out.println("election : " + electionRepository.findAll().get(0));
+
+        System.out.println("******************** Salle de Cours ******************************");
+
+        SalleDeCours salleDeCours = new SalleDeCours(null,"Salle 1A","capacite","description");
+        salleDeCoursRepository.save(salleDeCours);
+        System.out.println("salle de cours : " + salleDeCoursRepository.findAll().get(0));
+
+        System.out.println("******************** Ressources Bureautique ******************************");
+
+        RessourceBureautique ressourceBureautique = new RessourceBureautique(null,"ressourceName","photoLink", RessourceType.CABLE_HDMI,true);
+        ressourceBureautiqueRepository.save(ressourceBureautique);
+        System.out.println("ressource bureautique : " + ressourceBureautiqueRepository.findAll().get(0));
+
+        System.out.println("******************** Poste Informatique ******************************");
+        PosteInformatique posteInformatique = new PosteInformatique(null,"post1",true);
+        posteInformatiqueRepository.save(posteInformatique);
+        System.out.println("poste informatique: " + posteInformatiqueRepository.findAll().get(0));
     }
 }

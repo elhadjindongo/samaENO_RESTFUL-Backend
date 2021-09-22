@@ -17,14 +17,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.*;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
+@Table(name = "ressources_bureautique")
 public class RessourceBureautique {
-   private long id;
+   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
+   @Column(length = 155)
    private String name;
    private String photo;
    private RessourceType type;//un enum cableRj45,priseElectrique,cableHDMI et cableVGA

@@ -15,19 +15,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.*;
+import javax.persistence.*;
 
 
-
-
-@Data
+ @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
+ @Table(name="poste_informatique")
 public class PosteInformatique {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+   @Column(length = 155)
    private String name;
-   private boolean etat;
+   private boolean etat; //true la machine est fonctionnelle
    
    public boolean emprunter() {
       // TODO: implement

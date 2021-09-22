@@ -15,14 +15,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.*;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
+@Table(name = "salle_de_cours")
 public class SalleDeCours {
-    private long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(length = 155)
     private String titre;
+    @Column(length = 155)
     private String capacite;
     private String description;
 
@@ -31,7 +38,7 @@ public class SalleDeCours {
         return false;
     }
 
-    /** @pdOid a390af62-a48f-4008-a9e3-8c22932e4154 */
+
     public boolean liberer() {
         // TODO: implement
         return false;
